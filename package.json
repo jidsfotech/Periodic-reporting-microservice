@@ -1,0 +1,43 @@
+{
+    "name": "transaction-report-scheduler",
+    "version": "1.0.0",
+    "description": "Transaction-report-scheduler is is a microservice that sends generate and sends transaction reports to users via email and whatsap",
+    "main": "app.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "debug": "NODE_ENV=dev npx ts-node-dev app.ts",
+        "build": "tsc",
+        "script": "cross-env NODE_ENV=dev ts-node-dev app.ts",
+        "start": "node dist/app.js",
+        "format:check": "prettier --config ./.prettierrc --list-different \"src/**/*.ts\"",
+        "format": "prettier --config ./.prettierrc --write \"src/**/*.ts\"",
+        "prepare": "husky install",
+        "compile": "tsc --version && tsc"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cross-env": "7.0.3",
+        "dotenv": "16.3.1",
+        "moment": "2.29.4",
+        "mysql2": "3.6.1",
+        "node-cron": "3.0.2",
+        "nodemailer": "6.9.5",
+        "pdfkit": "0.13.0",
+        "turbo-logger": "2.2.0"
+    },
+    "devDependencies": {
+        "@types/node": "20.8.2",
+        "@types/node-cron": "3.0.9",
+        "@types/nodemailer": "6.4.11",
+        "@types/pdfkit": "0.12.12",
+        "husky": "8.0.3",
+        "lint-staged": "14.0.1",
+        "prettier": "3.0.3",
+        "ts-node-dev": "2.0.0",
+        "typescript": "5.2.2"
+    },
+    "lint-staged": {
+        "**/*": "prettier --write --ignore-unknown"
+    }
+}
