@@ -1,5 +1,5 @@
 import cron from 'node-cron';
-import { connectMySQL, fetchUsers, fetchUserTransaction } from '../lib/mysql';
+import { fetchUsers, fetchUserTransaction } from '../lib/mysql';
 import { generatePDF } from '../lib/pdfGenerator';
 import { sendEmail } from '../lib/mailer';
 import { getLastDayOfTheMonth } from '../lib/utils';
@@ -34,7 +34,7 @@ export const sendWeekReports = cron.schedule('0 0 * * 0', async () => {
     await generatePDF(transactions, 'weekly-report');
 
     // Send email to user
-    await sendEmail(email,'./report.pdf', 'weekly-report');
+    await sendEmail(email, './report.pdf', 'weekly-report');
   }
 });
 
