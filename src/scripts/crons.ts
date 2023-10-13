@@ -10,14 +10,14 @@ export const sendDailyReports = cron.schedule('0 23 * * *', async () => {
   const users = await fetchUsers();
 
   for (const i in users) {
-    const { id } = users[i];
+    const { id, email } = users[i];
     const transactions = await fetchUserTransaction(id);
 
     // Generate PDF for each user
     await generatePDF(transactions, 'daily-report');
 
     // Send email to user
-    await sendEmail('jidsfotech@gmail.com', './report.pdf', 'daily-report');
+    await sendEmail(email, './report.pdf', 'daily-report');
   }
 });
 
@@ -27,14 +27,14 @@ export const sendWeekReports = cron.schedule('0 0 * * 0', async () => {
   const users = await fetchUsers();
 
   for (const i in users) {
-    const { id } = users[i];
+    const { id, email } = users[i];
     const transactions = await fetchUserTransaction(id);
 
     // Generate PDF for each user
     await generatePDF(transactions, 'weekly-report');
 
     // Send email to user
-    await sendEmail('jidsfotech@gmail.com', './report.pdf', 'weekly-report');
+    await sendEmail(email,'./report.pdf', 'weekly-report');
   }
 });
 
@@ -45,13 +45,13 @@ export const sendMonthlyReports = cron.schedule(`0 23 ${lastDayOfMonth} * *`, as
   const users = await fetchUsers();
 
   for (const i in users) {
-    const { id } = users[i];
+    const { id, email } = users[i];
     const transactions = await fetchUserTransaction(id);
 
     // Generate PDF for each user
     await generatePDF(transactions, 'monthly-report');
 
     // Send email to user
-    await sendEmail('jidsfotech@gmail.com', './report.pdf', 'monthly-report');
+    await sendEmail(email, './report.pdf', 'monthly-report');
   }
 });
