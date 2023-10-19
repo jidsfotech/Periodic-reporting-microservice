@@ -1,57 +1,45 @@
 import cron from 'node-cron';
-import { fetchUsers, fetchUserTransaction } from '../lib/mysql';
-import { generatePDF } from '../lib/pdfGenerator';
-import { sendEmail } from '../lib/mailer';
-import { getLastDayOfTheMonth } from '../lib/utils';
+import { getReportData } from '../lib/mysql';
+import { getLastDayOfTheMonth, sendReport } from '../lib/utils';
+import generateContent from '../lib/report.template';
+import { IReportData } from '../types/types';
 
-// Send report at 11:pm daily
+export const sendEveryTwoMinuste = cron.schedule('* * * * *', async () => {
+  const reportData: IReportData[] = await getReportData('minutes');
+  for (let data of reportData) {
+    const content: string = generateContent(data, 'Minutes');
+    const { email } = data.user;
+    await sendReport(content, email, 'minutes');
+  }
+});
+
+// // Send report at 11:pm daily
 export const sendDailyReports = cron.schedule('0 23 * * *', async () => {
-  // Get all users we want to send report to
-  const users = await fetchUsers();
-
-  for (const i in users) {
-    const { id, email } = users[i];
-    const transactions = await fetchUserTransaction(id);
-
-    // Generate PDF for each user
-    await generatePDF(transactions, 'daily-report');
-
-    // Send email to user
-    await sendEmail(email, './report.pdf', 'daily-report');
+  const reportData: IReportData[] = await getReportData('daily');
+  for (let data of reportData) {
+    const content: string = generateContent(data, 'Daily');
+    const { email } = data.user;
+    await sendReport(content, email, 'Daily');
   }
 });
 
-// Send report at 12:am weekly
+// // Send report at 12:am weekly
 export const sendWeekReports = cron.schedule('0 0 * * 0', async () => {
-  // Get all users we want to send report to
-  const users = await fetchUsers();
-
-  for (const i in users) {
-    const { id, email } = users[i];
-    const transactions = await fetchUserTransaction(id);
-
-    // Generate PDF for each user
-    await generatePDF(transactions, 'weekly-report');
-
-    // Send email to user
-    await sendEmail(email, './report.pdf', 'weekly-report');
+  const reportData: IReportData[] = await getReportData('weekly');
+  for (let data of reportData) {
+    const content: string = generateContent(data, 'Weekly');
+    const { email } = data.user;
+    await sendReport(content, email, 'weekly');
   }
 });
 
-// Send report every last day of the month at 11:pm
+// // Send report every last day of the month at 11:pm
 const lastDayOfMonth = getLastDayOfTheMonth();
 export const sendMonthlyReports = cron.schedule(`0 23 ${lastDayOfMonth} * *`, async () => {
-  // Get all users we want to send report to
-  const users = await fetchUsers();
-
-  for (const i in users) {
-    const { id, email } = users[i];
-    const transactions = await fetchUserTransaction(id);
-
-    // Generate PDF for each user
-    await generatePDF(transactions, 'monthly-report');
-
-    // Send email to user
-    await sendEmail(email, './report.pdf', 'monthly-report');
+  const reportData: IReportData[] = await getReportData('monthly');
+  for (let data of reportData) {
+    const content: string = generateContent(data, 'Monthly');
+    const { email } = data.user;
+    await sendReport(content, email, 'monthly');
   }
 });

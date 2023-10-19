@@ -29,7 +29,6 @@ export interface MailOptions {
   text: string;
   attachments: [
     {
-      filename: string;
       path: string;
     },
   ];

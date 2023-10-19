@@ -6,8 +6,9 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "debug": "NODE_ENV=dev npx ts-node-dev app.ts",
+        "prebuild": "npm install",
         "build": "tsc",
-        "script": "cross-env NODE_ENV=dev ts-node-dev app.ts",
+        "start:dev": "cross-env NODE_ENV=dev ts-node-dev app.ts",
         "start": "node dist/app.js",
         "format:check": "prettier --config ./.prettierrc --list-different \"src/**/*.ts\"",
         "format": "prettier --config ./.prettierrc --write \"src/**/*.ts\"",
@@ -24,6 +25,7 @@
         "node-cron": "3.0.2",
         "nodemailer": "6.9.5",
         "pdfkit": "0.13.0",
+        "puppeteer": "^21.3.8",
         "turbo-logger": "2.2.0"
     },
     "devDependencies": {
@@ -31,6 +33,7 @@
         "@types/node-cron": "3.0.9",
         "@types/nodemailer": "6.4.11",
         "@types/pdfkit": "0.12.12",
+        "@types/puppeteer": "^7.0.4",
         "husky": "8.0.3",
         "lint-staged": "14.0.1",
         "prettier": "3.0.3",

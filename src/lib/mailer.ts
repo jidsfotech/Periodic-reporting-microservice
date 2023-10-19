@@ -21,7 +21,6 @@ const sendEmail = async (receiverEmail: string, attachmentPath: string, filename
     text: 'Please find attached the transaction report.',
     attachments: [
       {
-        filename: filename,
         path: attachmentPath,
       },
     ],
