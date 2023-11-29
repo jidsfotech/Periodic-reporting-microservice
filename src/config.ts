@@ -13,6 +13,7 @@ const {
   NODEMAILER_USER,
   NODEMAILER_PASSWORD,
   NODEMAILER_SENDER,
+  CLOUDAMQP_URL,
 } = process.env;
 
 export const config: Config = {
@@ -33,4 +34,5 @@ export const config: Config = {
     },
     from: NODEMAILER_SENDER,
   },
+  cloudAmpqUrl: CLOUDAMQP_URL,
 };

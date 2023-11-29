@@ -11,6 +11,7 @@ export interface ITransaction {
 }
 
 export interface IUser {
+  name: string;
   email: string;
   company: string;
   address: string;

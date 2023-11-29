@@ -1,6 +1,7 @@
 export interface Config {
   mysql: MysqlCred;
   nodeMailerCred: NodeMailer;
+  cloudAmpqUrl: string;
 }
 
 export interface MysqlCred {
